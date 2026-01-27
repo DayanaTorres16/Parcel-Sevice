@@ -1,13 +1,15 @@
+using Parcel_Service.Interfaces;
 using Parcel_Service.Packages;
+using Parcel_Service.Interfaces; 
 namespace Parcel_Service.Singleton;
 
-public sealed class FileWriterService
+public sealed class FileWriterService : IFileWriterService
 {
     private static readonly FileWriterService instance = new FileWriterService();
-    public static FileWriterService Instance => instance;
+    public static IFileWriterService Instance => instance;
     private FileWriterService() { }
-    
-    public void WritePackagesToFile(string filePath, List<Package> packages)
+
+    public void WritePackagesToFile(string filePath, List<IFormattablePackage> packages)
     {
         using (StreamWriter writer = new StreamWriter(filePath))
         {

@@ -1,19 +1,21 @@
 ﻿using Parcel_Service.Singleton;
 using Parcel_Service.Packages;
 using Parcel_Service.Thread;
+using Parcel_Service.Interfaces;
 
 class Program
 {
-    static async Task Main(string[] args)
+    static async Task Main()
     {
         string inputPath = Path.Combine(AppContext.BaseDirectory, "packages.json");
         string outputPath = "packages_output.txt";
-        
-        PackageProcessor processor = new PackageProcessor();
-        List<Package> supportedPackages = await processor.ProcessPackagesAsync(inputPath);
-        
-        FileWriterService.Instance.WritePackagesToFile(outputPath, supportedPackages);
 
-        Console.WriteLine("Paquetes procesados y escritos en packages_output.txt");
+        var processor = new PackageProcessor();
+        List<Package> supportedPackages = await processor.ProcessPackagesAsync(inputPath);
+
+        IFileWriterService writer = FileWriterService.Instance;
+        writer.WritePackagesToFile(outputPath, supportedPackages.Cast<IFormattablePackage>().ToList());
+
+        Console.WriteLine("Packages processed and written in packages_output.txt");
     }
 }

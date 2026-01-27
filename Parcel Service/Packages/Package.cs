@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using Parcel_Service.Interfaces;
 
 namespace Parcel_Service.Packages;
 
-public abstract class Package
+public abstract class Package: IPackage,  IFormattablePackage
 {
     public int id { get; set; } 
     public string name { get; set; } 
