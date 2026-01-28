@@ -9,7 +9,7 @@ public class PackageProcessor
     public async Task<List<Package>> ProcessPackagesAsync(string jsonPath)
     {
         if (!File.Exists(jsonPath))
-            throw new FileNotFoundException($"No se encontró el archivo en la ruta: {jsonPath}");
+            throw new FileNotFoundException($"The file was not found at the path: {jsonPath}");
         
         string json = await File.ReadAllTextAsync(jsonPath);
         
