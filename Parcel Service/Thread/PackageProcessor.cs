@@ -1,31 +1,37 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Parcel_Service.Packages;
 using Parcel_Service.Factory;
 
-namespace Parcel_Service.Thread;
-
 public class PackageProcessor
 {
-    public async Task<List<Package>> ProcessPackagesAsync(string jsonPath)
+    public async Task<List<Package>> ProcessPackagesAsync(string filePath)
     {
-        if (!File.Exists(jsonPath))
-            throw new FileNotFoundException($"The file was not found at the path: {jsonPath}");
-        
-        string json = await File.ReadAllTextAsync(jsonPath);
-        
-        var options = new JsonSerializerOptions 
-        { 
-            PropertyNameCaseInsensitive = true 
-        };
-        
-        var packagesDto = JsonSerializer.Deserialize<List<PackageDto>>(json, options);
+        string jsonString = await File.ReadAllTextAsync(filePath);
 
-        if (packagesDto == null) return new List<Package>();
-        
-        var tasks = packagesDto.Select(pkg => Task.Run(() => PackageFactory.CreatePackage(pkg)));
-        
-        var results = await Task.WhenAll(tasks);
-        
-        return results.Where(p => p != null).Cast<Package>().ToList();
+        var options = new JsonSerializerOptions
+        {
+            Converters = { new JsonStringEnumConverter() }
+        };
+
+        List<PackageDto>? dtos = JsonSerializer.Deserialize<List<PackageDto>>(jsonString, options);
+
+        var results = new List<Package>();
+
+        if (dtos != null)
+        {
+            Parallel.ForEach(dtos, dto =>
+            {
+                var package = PackageFactory.CreatePackage(dto);
+                if (package != null)
+                {
+                    lock (results)
+                    {
+                        results.Add(package);
+                    }
+                }
+            });
+        }
+        return results;
     }
 }

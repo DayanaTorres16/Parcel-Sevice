@@ -14,7 +14,7 @@ public sealed class FileWriterService : IFileWriterService
         using (StreamWriter writer = new StreamWriter(filePath))
         {
             writer.WriteLine("Id | Name | Description | Type | Weight");
-            writer.WriteLine(new string('-', 80));
+            writer.WriteLine(new string('-', 100));
 
             foreach (var package in packages)
             {

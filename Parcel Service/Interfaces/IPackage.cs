@@ -1,3 +1,5 @@
+using Parcel_Service.Enum;
+
 namespace Parcel_Service.Interfaces;
 
 public interface IPackage
@@ -6,5 +8,5 @@ public interface IPackage
     string name { get; }
     string description { get; }
     double weight { get; }
-    string type { get; }
+    PackageType type { get; }
 }
