@@ -1,37 +1,42 @@
 using System.Text.Json;
-using System.Text.Json.Serialization;
+using Parcel_Service.Interfaces;
 using Parcel_Service.Packages;
 using Parcel_Service.Factory;
 
-public class PackageProcessor
+namespace Parcel_Service.Thread
 {
-    public async Task<List<Package>> ProcessPackagesAsync(string filePath)
+    public class PackageProcessor
     {
-        string jsonString = await File.ReadAllTextAsync(filePath);
+        private readonly IFileWriterService _writer;
 
-        var options = new JsonSerializerOptions
+        public PackageProcessor(IFileWriterService writer)
         {
-            Converters = { new JsonStringEnumConverter() }
-        };
-
-        List<PackageDto>? dtos = JsonSerializer.Deserialize<List<PackageDto>>(jsonString, options);
-
-        var results = new List<Package>();
-
-        if (dtos != null)
-        {
-            Parallel.ForEach(dtos, dto =>
-            {
-                var package = PackageFactory.CreatePackage(dto);
-                if (package != null)
-                {
-                    lock (results)
-                    {
-                        results.Add(package);
-                    }
-                }
-            });
+            _writer = writer;
         }
-        return results;
-    }
+
+        public async Task ProcessPackagesAsync(string inputPath, string outputPath)
+        {
+            string jsonString = await File.ReadAllTextAsync(inputPath);
+
+            List<PackageDto>? dtos = JsonSerializer.Deserialize<List<PackageDto>>(jsonString);
+
+            var results = new List<Package>();
+
+            if (dtos != null)
+            {
+                Parallel.ForEach(dtos, dto =>
+                {
+                    var package = PackageFactory.CreatePackage(dto);
+                    if (package != null)
+                    {
+                        lock (results)
+                        {
+                            results.Add(package);
+                        }
+                    }
+                });
+            }
+            _writer.WritePackagesToFile(outputPath, results.Cast<IFormattablePackage>().ToList());
+        }
+    }   
 }
