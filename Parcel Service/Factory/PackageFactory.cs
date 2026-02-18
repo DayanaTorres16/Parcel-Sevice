@@ -1,3 +1,4 @@
+using Parcel_Service.Enum;
 using Parcel_Service.Packages;
 namespace Parcel_Service.Factory;
 
@@ -8,28 +9,31 @@ public static class PackageFactory
         switch (dto.type)
         {
             case "Documents":
-                return new DocumentPackage
+                return new Package()
                 {
                     id = dto.id,
                     name = dto.name,
                     description = dto.description,
-                    weight = dto.weight
+                    weight = dto.weight,
+                    type = PackageType.Documents
                 };
             case "HeavyPackage":
-                return new HeavyPackage
+                return new Package()
                 {
                     id = dto.id,
                     name = dto.name,
                     description = dto.description,
-                    weight = dto.weight
+                    weight = dto.weight,
+                    type = PackageType.HeavyPackage
                 };
             case "SmallPackage":
-                return new SmallPackage
+                return new Package()
                 {
                     id = dto.id,
                     name = dto.name,
                     description = dto.description,
-                    weight = dto.weight
+                    weight = dto.weight,
+                    type = PackageType.SmallPackage
                 };
             default:
                 return null;

@@ -1,11 +1,12 @@
 using Parcel_Service.Interfaces;
+using Parcel_Service.Packages;
 
 namespace Parcel_Service.Singleton
 {
     public sealed class FileWriterService : IFileWriterService
     {
         
-        public void WritePackagesToFile(string filePath, List<IFormattablePackage> packages)
+        public void WritePackagesToFile(string filePath, List<Package> packages)
         {
             using (StreamWriter writer = new StreamWriter(filePath))
             {

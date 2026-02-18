@@ -6,4 +6,7 @@ global using global::System.Linq;
 global using global::System.Net.Http;
 global using global::System.Threading;
 global using global::System.Threading.Tasks;
+global using global::VerifyTests;
+global using global::VerifyXunit;
 global using global::Xunit;
+global using static global::VerifyXunit.Verifier;

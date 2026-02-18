@@ -14,29 +14,38 @@ namespace Parcel_Service.Thread
             _writer = writer;
         }
 
-        public async Task ProcessPackagesAsync(string inputPath, string outputPath)
+        public async Task<List<Package>> ProcessPackagesAsync(string inputPath, string outputPath)
         {
             string jsonString = await File.ReadAllTextAsync(inputPath);
 
-            List<PackageDto>? dtos = JsonSerializer.Deserialize<List<PackageDto>>(jsonString);
-
-            var results = new List<Package>();
-
-            if (dtos != null)
+            try
             {
-                Parallel.ForEach(dtos, dto =>
+                List<PackageDto>? dtos = JsonSerializer.Deserialize<List<PackageDto>>(jsonString);
+
+                var results = new List<Package>();
+
+                if (dtos != null)
                 {
-                    var package = PackageFactory.CreatePackage(dto);
-                    if (package != null)
+                    Parallel.ForEach(dtos, dto =>
                     {
-                        lock (results)
+                        var package = PackageFactory.CreatePackage(dto);
+                        if (package != null)
                         {
-                            results.Add(package);
+                            lock (results)
+                            {
+                                results.Add(package);
+                            }
                         }
-                    }
-                });
+                    });
+                }
+
+                return [];
             }
-            _writer.WritePackagesToFile(outputPath, results.Cast<IFormattablePackage>().ToList());
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }   
 }

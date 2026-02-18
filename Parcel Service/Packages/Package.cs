@@ -6,13 +6,13 @@ using Parcel_Service.Enum;
 
 namespace Parcel_Service.Packages;
 
-public abstract class Package: IPackage,  IFormattablePackage
+public class Package
 {
     public int id { get; set; } 
     public string name { get; set; } 
     public string description { get; set; } 
     public double weight { get; set; }
-    public abstract PackageType type { get;  }
+    public PackageType type { get; set; }
 
     public virtual string FormatForOutput()
     {
