@@ -11,7 +11,7 @@ class Program
         string outputPath = Path.Combine(AppContext.BaseDirectory, "packages_output.txt");
 
         IFileWriterService writer = new FileWriterService();
-        var processor = new PackageProcessor(writer);
+        var processor = new PackageProcessor();
 
         await processor.ProcessPackagesAsync(inputPath, outputPath);
 

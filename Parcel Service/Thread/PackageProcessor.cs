@@ -7,13 +7,6 @@ namespace Parcel_Service.Thread
 {
     public class PackageProcessor
     {
-        private readonly IFileWriterService _writer;
-
-        public PackageProcessor(IFileWriterService writer)
-        {
-            _writer = writer;
-        }
-
         public async Task<List<Package>> ProcessPackagesAsync(string inputPath, string outputPath)
         {
             string jsonString = await File.ReadAllTextAsync(inputPath);
@@ -38,7 +31,6 @@ namespace Parcel_Service.Thread
                         }
                     });
                 }
-
                 return [];
             }
             catch (Exception e)
