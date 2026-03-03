@@ -3,5 +3,6 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::5FF84FCC-430D-4AE8-8697-B777538BD7E1::net9.0::Parcel_Service.Tests.PackageFactoryTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::5FF84FCC-430D-4AE8-8697-B777538BD7E1::net9.0::Parcel_Service.Tests.UnitTestProcessor&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::5FF84FCC-430D-4AE8-8697-B777538BD7E1::net9.0::ParcelService.Tests.UnitTestProcessor&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

@@ -1,5 +1,4 @@
 using System.Text.Json;
-using Parcel_Service.Interfaces;
 using Parcel_Service.Packages;
 using Parcel_Service.Factory;
 
@@ -31,7 +30,7 @@ namespace Parcel_Service.Thread
                         }
                     });
                 }
-                return [];
+                return results;
             }
             catch (Exception e)
             {
