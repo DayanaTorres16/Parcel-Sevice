@@ -1,7 +1,7 @@
 using System.Text.Json;
 using Parcel_Service.Enum;
 using Parcel_Service.Packages;
-using Parcel_Service.Thread;
+using Parcel_Service.Processors;
 
 namespace ParcelService.Tests
 {
@@ -46,8 +46,8 @@ namespace ParcelService.Tests
 
             var dtos = new List<PackageDto>
             {
-                new PackageDto { id = 1, name = "Doc", description = "Test", type = "Documents", weight = 1.0 },
-                new PackageDto { id = 2, name = "Box", description = "Heavy", type = "HeavyPackage", weight = 50.0 }
+                new PackageDto { Id = 1, Name = "Doc", Description = "Test", type = "Documents", Weight = 1.0 },
+                new PackageDto { Id = 2, Name = "Box", Description = "Heavy", type = "HeavyPackage", Weight = 50.0 }
             };
 
             string json = JsonSerializer.Serialize(dtos);
@@ -71,7 +71,7 @@ namespace ParcelService.Tests
 
             var dtos = new List<PackageDto>
             {
-                new PackageDto { id = 10, name = null, description = null, type = "Documents", weight = 0 }
+                new PackageDto { Id = 10, Name = null, Description = null, type = "Documents", Weight = 0 }
             };
 
             string json = JsonSerializer.Serialize(dtos);
@@ -82,9 +82,9 @@ namespace ParcelService.Tests
             var result = await processor.ProcessPackagesAsync(inputPath, outputPath);
 
             Assert.Single(result);
-            Assert.Equal(10, result[0].id);
-            Assert.Null(result[0].name);
-            Assert.Null(result[0].description);
+            Assert.Equal(10, result[0].Id);
+            Assert.Null(result[0].Name);
+            Assert.Null(result[0].Description);
             Assert.Equal(PackageType.Documents, result[0].type);
         }
     }

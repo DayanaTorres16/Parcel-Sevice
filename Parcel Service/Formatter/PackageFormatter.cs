@@ -1,16 +1,16 @@
 using Parcel_Service.Packages;
 
-namespace Parcel_Service.DesignFormat
+namespace Parcel_Service.Formatter
 {
     public static class PackageFormatter
     {
         public static string Format(Package package)
         {
-            return package.id.ToString().PadRight(5) + " | " +
-                   package.name.PadRight(25) + " | " +
-                   package.description.PadRight(30) + " | " +
+            return package.Id.ToString().PadRight(5) + " | " +
+                   package.Name.PadRight(25) + " | " +
+                   package.Description.PadRight(30) + " | " +
                    package.type.ToString().PadRight(35) + " | " +
-                   package.weight.ToString("F2").PadRight(10);
+                   package.Weight.ToString("F2").PadRight(10);
         }
 
         public static string Header()

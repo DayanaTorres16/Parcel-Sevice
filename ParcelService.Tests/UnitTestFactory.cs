@@ -11,32 +11,32 @@ namespace Parcel_Service.Tests
         {
             var dto = new PackageDto
             {
-                id = 1,
-                name = "Doc1",
-                description = "Important papers",
+                Id = 1,
+                Name = "Doc1",
+                Description = "Important papers",
                 type = "Documents",
-                weight = 0.5
+                Weight = 0.5
             };
 
             var package = PackageFactory.CreatePackage(dto);
 
             Assert.NotNull(package);
             Assert.Equal(PackageType.Documents, package.type);
-            Assert.Equal(dto.id, package.id);
-            Assert.Equal(dto.name, package.name);
-            Assert.Equal(dto.description, package.description);
-            Assert.Equal(dto.weight, package.weight);
+            Assert.Equal(dto.Id, package.Id);
+            Assert.Equal(dto.Name, package.Name);
+            Assert.Equal(dto.Description, package.Description);
+            Assert.Equal(dto.Weight, package.Weight);
         }
         [Fact]
         public void CreatePackage_HeavyPackage_ReturnsHeavyPackage()
         {
             var dto = new PackageDto
             {
-                id = 2,
-                name = "Box",
-                description = "Heavy box",
+                Id = 2,
+                Name = "Box",
+                Description = "Heavy box",
                 type = "HeavyPackage",
-                weight = 100.0
+                Weight = 100.0
             };
 
             var package = PackageFactory.CreatePackage(dto);
@@ -49,11 +49,11 @@ namespace Parcel_Service.Tests
         {
             var dto = new PackageDto
             {
-                id = 3,
-                name = "Gift",
-                description = "Small gift",
+                Id = 3,
+                Name = "Gift",
+                Description = "Small gift",
                 type = "SmallPackage",
-                weight = 1.0
+                Weight = 1.0
             };
 
             var package = PackageFactory.CreatePackage(dto);
@@ -66,11 +66,11 @@ namespace Parcel_Service.Tests
         {
             var dto = new PackageDto
             {
-                id = 4,
-                name = "Unknown",
-                description = "Invalid type",
+                Id = 4,
+                Name = "Unknown",
+                Description = "Invalid type",
                 type = "InvalidType",
-                weight = 2.0
+                Weight = 2.0
             };
 
             var package = PackageFactory.CreatePackage(dto);
@@ -83,64 +83,64 @@ namespace Parcel_Service.Tests
         {
             var dto = new PackageDto
             {
-                id = 6,
-                name = null,
-                description = null,
+                Id = 6,
+                Name = null,
+                Description = null,
                 type = "Documents",
-                weight = 0
+                Weight = 0
             };
 
             var package = PackageFactory.CreatePackage(dto);
 
             Assert.NotNull(package);
             Assert.Equal(PackageType.Documents, package.type);
-            Assert.Null(package.name);
-            Assert.Null(package.description);
+            Assert.Null(package.Name);
+            Assert.Null(package.Description);
         }
         [Fact]
         public void CreatePackage_ExtremeWeight_ReturnsPackage()
         {
             var dto = new PackageDto
             {
-                id = 7,
-                name = "BigBox",
-                description = "Extreme weight",
+                Id = 7,
+                Name = "BigBox",
+                Description = "Extreme weight",
                 type = "HeavyPackage",
-                weight = double.MaxValue
+                Weight = double.MaxValue
             };
 
             var package = PackageFactory.CreatePackage(dto);
 
             Assert.NotNull(package);
-            Assert.Equal(double.MaxValue, package.weight);
+            Assert.Equal(double.MaxValue, package.Weight);
         }
         [Fact]
         public void CreatePackage_NegativeId_ReturnsPackageWithNegativeId()
         {
             var dto = new PackageDto
             {
-                id = -1,
-                name = "Invalid",
-                description = "Negative id",
+                Id = -1,
+                Name = "Invalid",
+                Description = "Negative id",
                 type = "SmallPackage",
-                weight = 1.0
+                Weight = 1.0
             };
 
             var package = PackageFactory.CreatePackage(dto);
 
             Assert.NotNull(package);
-            Assert.Equal(-1, package.id);
+            Assert.Equal(-1, package.Id);
         }
         [Fact]
         public void CreatePackage_TypeWithSpaces_ReturnsNull()
         {
             var dto = new PackageDto
             {
-                id = 8,
-                name = "Box",
-                description = "Type with spaces",
+                Id = 8,
+                Name = "Box",
+                Description = "Type with spaces",
                 type = " HeavyPackage ", 
-                weight = 10.0
+                Weight = 10.0
             };
 
             var package = PackageFactory.CreatePackage(dto);

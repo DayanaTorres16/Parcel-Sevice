@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Parcel_Service.Packages;
 using Parcel_Service.Factory;
+using Parcel_Service.Packages;
 
-namespace Parcel_Service.Thread
+namespace Parcel_Service.Processors
 {
     public class PackageProcessor
     {
