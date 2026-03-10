@@ -5,7 +5,7 @@ using Parcel_Service.Processors;
 
 namespace ParcelService.Tests
 {
-    public class UnitTestProcessor
+    public class PackageProcessorTests
     {
         [Fact]
         public async Task ProcessPackagesAsync_EmptyJson_ReturnsEmptyList()
