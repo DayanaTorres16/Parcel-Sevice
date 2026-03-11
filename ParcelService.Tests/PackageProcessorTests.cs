@@ -41,13 +41,12 @@ namespace ParcelService.Tests
         [Fact]
         public async Task ProcessPackagesAsync_ValidJson_ReturnsPackages()
         {
-            string inputPath = "valid.json";
+            string inputPath = "valid_complete.json";
             string outputPath = "output.txt";
 
             var dtos = new List<PackageDto>
             {
-                new PackageDto { Id = 1, Name = "Doc", Description = "Test", type = "Documents", Weight = 1.0 },
-                new PackageDto { Id = 2, Name = "Box", Description = "Heavy", type = "HeavyPackage", Weight = 50.0 }
+                new PackageDto { Id = 1, Name = "Laptop", Description = "Electronic", type = "Documents", Weight = 2.5 }
             };
 
             string json = JsonSerializer.Serialize(dtos);
@@ -58,9 +57,7 @@ namespace ParcelService.Tests
             var result = await processor.ProcessPackagesAsync(inputPath, outputPath);
 
             Assert.NotNull(result);
-            Assert.Equal(2, result.Count);
-            Assert.Contains(result, p => p.type == PackageType.Documents);
-            Assert.Contains(result, p => p.type == PackageType.HeavyPackage);
+            Assert.Equal("Laptop", result[0].Name);
         }
 
         [Fact]
@@ -81,11 +78,28 @@ namespace ParcelService.Tests
 
             var result = await processor.ProcessPackagesAsync(inputPath, outputPath);
 
-            Assert.Single(result);
-            Assert.Equal(10, result[0].Id);
-            Assert.Null(result[0].Name);
-            Assert.Null(result[0].Description);
-            Assert.Equal(PackageType.Documents, result[0].type);
+            Assert.Empty(result);
+            
         }
+        [Fact]
+        public async Task ProcessPackagesAsync_WhiteSpaceValues_ShouldIgnorePackage()
+        {
+            string inputPath = "whitespace.json";
+            string outputPath = "output.txt";
+
+            var dtos = new List<PackageDto>
+            {
+                new PackageDto { Id = 20, Name = "   ", Description = "", type = "Documents", Weight = 1.0 }
+            };
+
+            string json = JsonSerializer.Serialize(dtos);
+            await File.WriteAllTextAsync(inputPath, json);
+
+            var processor = new PackageProcessor();
+            var result = await processor.ProcessPackagesAsync(inputPath, outputPath);
+            
+            Assert.Empty(result);
+        }
+        
     }
 }

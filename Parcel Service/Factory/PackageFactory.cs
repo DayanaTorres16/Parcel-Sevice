@@ -6,7 +6,9 @@ public static class PackageFactory
 {
     public static Package? CreatePackage(PackageDto dto)
     {
-        switch (dto.type)
+        string normalizedType = dto.type?.Trim() ?? string.Empty;
+        
+        switch (normalizedType)
         {
             case "Documents":
                 return new Package()

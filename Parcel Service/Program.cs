@@ -1,5 +1,4 @@
 ﻿using Parcel_Service.Packages;
-using Parcel_Service.Singleton;
 using Parcel_Service.Interfaces;
 using Parcel_Service.Processors;
 

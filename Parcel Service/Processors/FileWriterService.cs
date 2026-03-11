@@ -1,7 +1,7 @@
 using Parcel_Service.Interfaces;
 using Parcel_Service.Packages;
 
-namespace Parcel_Service.Singleton
+namespace Parcel_Service.Processors
 {
     public sealed class FileWriterService : IFileWriterService
     {

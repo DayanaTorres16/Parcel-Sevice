@@ -20,12 +20,18 @@ namespace Parcel_Service.Processors
                 {
                     Parallel.ForEach(dtos, dto =>
                     {
-                        var package = PackageFactory.CreatePackage(dto);
-                        if (package != null)
+                        bool isDataComplete = !string.IsNullOrWhiteSpace(dto.Name) && 
+                                              !string.IsNullOrWhiteSpace(dto.Description) && 
+                                              !string.IsNullOrWhiteSpace(dto.type);
+                        if (isDataComplete)
                         {
-                            lock (results)
+                            var package = PackageFactory.CreatePackage(dto);
+                            if (package != null)
                             {
-                                results.Add(package);
+                                lock (results)
+                                {
+                                    results.Add(package);
+                                }
                             }
                         }
                     });
