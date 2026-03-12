@@ -1,18 +1,21 @@
 using System;
 using System.Collections.Generic;
+using Parcel_Service.Interfaces;
+using Parcel_Service.Enum;
+using Parcel_Service.Formatter;
 
 namespace Parcel_Service.Packages;
 
-public abstract class Package
+public class Package
 {
-    public int id { get; set; } 
-    public string name { get; set; } 
-    public string description { get; set; } 
-    public double weight { get; set; }
-    public abstract string type { get; }
-    
+    public int Id { get; set; } 
+    public string Name { get; set; } 
+    public string Description { get; set; } 
+    public double Weight { get; set; }
+    public PackageType type { get; set; }
+
     public virtual string FormatForOutput()
     {
-        return $"{id} | {name} | {description} | {type} | {weight}";
+        return PackageFormatter.Format(this);
     }
 }
